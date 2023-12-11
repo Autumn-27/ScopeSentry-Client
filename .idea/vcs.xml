@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/libs/fingerprintx" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/libs/httpx" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/libs/ksubdomain" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/libs/subfinder" vcs="Git" />
+  </component>
+</project>
