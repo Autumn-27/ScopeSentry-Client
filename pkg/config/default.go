@@ -20044,5 +20044,1329 @@ cloudstack
 graceful`)
 
 	scopSentryDefault = []byte(`Subdomain:
-	ThreadNumber: 10`)
+    ThreadNumber: 10
+Time:
+    TimeZoneName: Asia/Shanghai
+MongDB:
+    Host: 127.0.0.1
+    Username: root
+    Password: 123456`)
 )
+
+var SecretsRulesJson = `{
+    "rules": [
+        {
+            "id": "Potential cryptographic private key",
+            "type": "value",
+            "enabled": true,
+            "pattern": ".pem$"
+        },{
+            "id": "IP address",
+            "type": "value",
+            "enabled": true,
+            "pattern": "^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$"
+        },
+		{
+            "id": "google_api",
+            "type": "value",
+            "enabled": true,
+            "pattern": "^AIza[0-9A-Za-z-_]{35}$"
+        },
+		{
+            "id": "firebase",
+            "type": "value",
+            "enabled": true,
+            "pattern": "^AAAA[A-Za-z0-9_-]{7}:[A-Za-z0-9_-]{140}$"
+        },
+		{
+            "id": "authorization_api",
+            "type": "value",
+            "enabled": true,
+            "pattern": "^api[key|_key|\s+]+[a-zA-Z0-9_\-]{5,100}$"
+        },
+        {
+            "id": "Log file",
+            "type": "value",
+            "enabled": true,
+            "pattern": ".log$"
+        },
+        {
+            "id": "Potential cryptographic key bundle",
+            "type": "value",
+            "enabled": true,
+            "pattern": ".pkcs12$"
+        },
+        {
+            "id": "Potential cryptographic key bundle",
+            "type": "value",
+            "enabled": true,
+            "pattern": ".p12$"
+        },
+        {
+            "id": "Potential cryptographic key bundle",
+            "type": "value",
+            "enabled": true,
+            "pattern": ".pfx$"
+        },
+        {
+            "id": "Potential cryptographic key bundle",
+            "type": "value",
+            "enabled": true,
+            "pattern": ".asc$"
+        },
+        {
+            "id": "Pidgin OTR private key",
+            "type": "value",
+            "enabled": true,
+            "pattern": "otr.private_key$"
+        },
+        {
+            "id": "OpenVPN client configuration file",
+            "type": "value",
+            "enabled": true,
+            "pattern": ".ovpn$"
+        },
+        {
+            "id": "Azure service configuration schema file",
+            "type": "value",
+            "enabled": true,
+            "pattern": ".cscfg$"
+        },
+        {
+            "id": "Remote Desktop connection file",
+            "type": "value",
+            "enabled": true,
+            "pattern": ".rdp$"
+        },
+        {
+            "id": "Microsoft SQL database file",
+            "type": "value",
+            "enabled": true,
+            "pattern": ".mdf$"
+        },
+        {
+            "id": "Microsoft SQL server compact database file",
+            "type": "value",
+            "enabled": true,
+            "pattern": ".sdf$"
+        },
+        {
+            "id": "SQLite database file",
+            "type": "value",
+            "enabled": true,
+            "pattern": ".sqlite$"
+        },
+        {
+            "id": "SQLite3 database file",
+            "type": "value",
+            "enabled": true,
+            "pattern": ".sqlite3$"
+        },
+        {
+            "id": "Microsoft BitLocker recovery key file",
+            "type": "value",
+            "enabled": true,
+            "pattern": ".bek$"
+        },
+        {
+            "id": "Microsoft BitLocker Trusted Platform Module password file",
+            "type": "value",
+            "enabled": true,
+            "pattern": ".tpm$"
+        },
+        {
+            "id": "Windows BitLocker full volume encrypted data file",
+            "type": "value",
+            "enabled": true,
+            "pattern": ".fve$"
+        },
+        {
+            "id": "Java keystore file",
+            "type": "value",
+            "enabled": true,
+            "pattern": ".jks$"
+        },
+        {
+            "id": "Password Safe database file",
+            "type": "value",
+            "enabled": true,
+            "pattern": ".psafe3$"
+        },
+        {
+            "id": "Ruby On Rails secret token configuration file",
+            "type": "value",
+            "enabled": true,
+            "pattern": "secret_token.rb$"
+        },
+        {
+            "id": "Carrierwave configuration file",
+            "type": "value",
+            "enabled": true,
+            "pattern": "carrierwave.rb$"
+        },
+        {
+            "id": "Potential Ruby On Rails database configuration file",
+            "type": "value",
+            "enabled": true,
+            "pattern": "database.yml$"
+        },
+        {
+            "id": "OmniAuth configuration file",
+            "type": "value",
+            "enabled": true,
+            "pattern": "omniauth.rb$"
+        },
+        {
+            "id": "Django configuration file",
+            "type": "value",
+            "enabled": true,
+            "pattern": "settings.py$"
+        },
+        {
+            "id": "1Password password manager database file",
+            "type": "value",
+            "enabled": true,
+            "pattern": ".agilekeychain$"
+        },
+        {
+            "id": "Apple Keychain database file",
+            "type": "value",
+            "enabled": true,
+            "pattern": ".keychain$"
+        },
+        {
+            "id": "Network traffic capture file",
+            "type": "value",
+            "enabled": true,
+            "pattern": ".pcap$"
+        },
+        {
+            "id": "GnuCash database file",
+            "type": "value",
+            "enabled": true,
+            "pattern": ".gnucash$"
+        },
+        {
+            "id": "Jenkins publish over SSH plugin file",
+            "type": "value",
+            "enabled": true,
+            "pattern": "jenkins.plugins.publish_over_ssh.BapSshPublisherPlugin.xml$"
+        },
+        {
+            "id": "Potential Jenkins credentials file",
+            "type": "value",
+            "enabled": true,
+            "pattern": "credentials.xml$"
+        },
+        {
+            "id": "KDE Wallet Manager database file",
+            "type": "value",
+            "enabled": true,
+            "pattern": ".kwallet$"
+        },
+        {
+            "id": "Potential MediaWiki configuration file",
+            "type": "value",
+            "enabled": true,
+            "pattern": "LocalSettings.php$"
+        },
+        {
+            "id": "Tunnelblick VPN configuration file",
+            "type": "value",
+            "enabled": true,
+            "pattern": ".tblk$"
+        },
+        {
+            "id": "Sequel Pro MySQL database manager bookmark file",
+            "type": "value",
+            "enabled": true,
+            "pattern": "Favorites.plist$"
+        },
+        {
+            "id": "Little Snitch firewall configuration file",
+            "type": "value",
+            "enabled": true,
+            "pattern": "configuration.user.xpl$"
+        },
+        {
+            "id": "Day One journal file",
+            "type": "value",
+            "enabled": true,
+            "pattern": ".dayone$"
+        },
+        {
+            "id": "Potential jrnl journal file",
+            "type": "value",
+            "enabled": true,
+            "pattern": "journal.txt$"
+        },
+        {
+            "id": "Chef Knife configuration file",
+            "type": "value",
+            "enabled": true,
+            "pattern": "knife.rb$"
+        },
+        {
+            "id": "cPanel backup ProFTPd credentials file",
+            "type": "value",
+            "enabled": true,
+            "pattern": "proftpdpasswd$"
+        },
+        {
+            "id": "Robomongo MongoDB manager configuration file",
+            "type": "value",
+            "enabled": true,
+            "pattern": "robomongo.json$"
+        },
+        {
+            "id": "FileZilla FTP configuration file",
+            "type": "value",
+            "enabled": true,
+            "pattern": "filezilla.xml$"
+        },
+        {
+            "id": "FileZilla FTP recent servers file",
+            "type": "value",
+            "enabled": true,
+            "pattern": "recentservers.xml$"
+        },
+        {
+            "id": "Ventrilo server configuration file",
+            "type": "value",
+            "enabled": true,
+            "pattern": "ventrilo_srv.ini$"
+        },
+        {
+            "id": "Terraform variable config file",
+            "type": "value",
+            "enabled": true,
+            "pattern": "terraform.tfvars$"
+        },
+        {
+            "id": "Shell configuration file",
+            "type": "value",
+            "enabled": true,
+            "pattern": ".exports$"
+        },
+        {
+            "id": "Shell configuration file",
+            "type": "value",
+            "enabled": true,
+            "pattern": ".functions$"
+        },
+        {
+            "id": "Shell configuration file",
+            "type": "value",
+            "enabled": true,
+            "pattern": ".extra$"
+        },
+        {
+            "id": "Private SSH key",
+            "type": "value",
+            "enabled": true,
+            "pattern": "^.*_rsa$"
+        },
+        {
+            "id": "Private SSH key",
+            "type": "value",
+            "enabled": true,
+            "pattern": "^.*_dsa$"
+        },
+        {
+            "id": "Private SSH key",
+            "type": "value",
+            "enabled": true,
+            "pattern": "^.*_ed25519$"
+        },
+        {
+            "id": "Private SSH key",
+            "type": "value",
+            "enabled": true,
+            "pattern": "^.*_ecdsa$"
+        },
+        {
+            "id": "SSH configuration file",
+            "type": "value",
+            "enabled": true,
+            "pattern": "\\.?ssh/config$"
+        },
+        {
+            "id": "Potential cryptographic private key",
+            "type": "value",
+            "enabled": true,
+            "pattern": "^key(pair)?$"
+        },
+        {
+            "id": "Shell command history file",
+            "type": "value",
+            "enabled": true,
+            "pattern": "^\\.?(bash_|zsh_|sh_|z)?history$"
+        },
+        {
+            "id": "MySQL client command history file",
+            "type": "value",
+            "enabled": true,
+            "pattern": "^\\.?mysql_history$"
+        },
+        {
+            "id": "PostgreSQL client command history file",
+            "type": "value",
+            "enabled": true,
+            "pattern": "^\\.?psql_history$"
+        },
+        {
+            "id": "PostgreSQL password file",
+            "type": "value",
+            "enabled": true,
+            "pattern": "^\\.?pgpass$"
+        },
+        {
+            "id": "Ruby IRB console history file",
+            "type": "value",
+            "enabled": true,
+            "pattern": "^\\.?irb_history$"
+        },
+        {
+            "id": "Pidgin chat client account configuration file",
+            "type": "value",
+            "enabled": true,
+            "pattern": "\\.?purple/accounts\\.xml$"
+        },
+        {
+            "id": "Hexchat/XChat IRC client server list configuration file",
+            "type": "value",
+            "enabled": true,
+            "pattern": "\\.?xchat2?/servlist_?\\.conf$"
+        },
+        {
+            "id": "Irssi IRC client configuration file",
+            "type": "value",
+            "enabled": true,
+            "pattern": "\\.?irssi/config$"
+        },
+        {
+            "id": "Recon-ng web reconnaissance framework API key database",
+            "type": "value",
+            "enabled": true,
+            "pattern": "\\.?recon-ng/keys\\.db$"
+        },
+        {
+            "id": "DBeaver SQL database manager configuration file",
+            "type": "value",
+            "enabled": true,
+            "pattern": "^\\.?dbeaver-data-sources.xml$"
+        },
+        {
+            "id": "Mutt e-mail client configuration file",
+            "type": "value",
+            "enabled": true,
+            "pattern": "^\\.?muttrc$"
+        },
+        {
+            "id": "S3cmd configuration file",
+            "type": "value",
+            "enabled": true,
+            "pattern": "^\\.?s3cfg$"
+        },
+        {
+            "id": "AWS CLI credentials file",
+            "type": "value",
+            "enabled": true,
+            "pattern": "\\.?aws/credentials$"
+        },
+        {
+            "id": "SFTP connection configuration file",
+            "type": "value",
+            "enabled": true,
+            "pattern": "^sftp-config(\\.json)?$"
+        },
+        {
+            "id": "T command-line Twitter client configuration file",
+            "type": "value",
+            "enabled": true,
+            "pattern": "^\\.?trc$"
+        },
+        {
+            "id": "Shell configuration file",
+            "type": "value",
+            "enabled": true,
+            "pattern": "^\\.?(bash|zsh|csh)rc$"
+        },
+        {
+            "id": "Shell profile configuration file",
+            "type": "value",
+            "enabled": true,
+            "pattern": "^\\.?(bash_|zsh_)?profile$"
+        },
+        {
+            "id": "Shell command alias configuration file",
+            "type": "value",
+            "enabled": true,
+            "pattern": "^\\.?(bash_|zsh_)?aliases$"
+        },
+        {
+            "id": "PHP configuration file",
+            "type": "value",
+            "enabled": true,
+            "pattern": "config(\\.inc)?\\.php$"
+        },
+        {
+            "id": "GNOME Keyring database file",
+            "type": "value",
+            "enabled": true,
+            "pattern": "^key(store|ring)$"
+        },
+        {
+            "id": "KeePass password manager database file",
+            "type": "value",
+            "enabled": true,
+            "pattern": "^kdbx?$"
+        },
+        {
+            "id": "SQL dump file",
+            "type": "value",
+            "enabled": true,
+            "pattern": "^sql(dump)?$"
+        },
+        {
+            "id": "Apache htpasswd file",
+            "type": "value",
+            "enabled": true,
+            "pattern": "^\\.?htpasswd$"
+        },
+        {
+            "id": "Configuration file for auto-login process",
+            "type": "value",
+            "enabled": true,
+            "pattern": "^(\\.|_)?netrc$"
+        },
+        {
+            "id": "Rubygems credentials file",
+            "type": "value",
+            "enabled": true,
+            "pattern": "\\.?gem/credentials$"
+        },
+        {
+            "id": "Tugboat DigitalOcean management tool configuration",
+            "type": "value",
+            "enabled": true,
+            "pattern": "^\\.?tugboat$"
+        },
+        {
+            "id": "DigitalOcean doctl command-line client configuration file",
+            "type": "value",
+            "enabled": true,
+            "pattern": "doctl/config.yaml$"
+        },
+        {
+            "id": "git-credential-store helper credentials file",
+            "type": "value",
+            "enabled": true,
+            "pattern": "^\\.?git-credentials$"
+        },
+        {
+            "id": "GitHub Hub command-line client configuration file",
+            "type": "value",
+            "enabled": true,
+            "pattern": "config/hub$"
+        },
+        {
+            "id": "Git configuration file",
+            "type": "value",
+            "enabled": true,
+            "pattern": "^\\.?gitconfig$"
+        },
+        {
+            "id": "Chef private key",
+            "type": "value",
+            "enabled": true,
+            "pattern": "\\.?chef/(.*)\\.pem$"
+        },
+        {
+            "id": "Potential Linux shadow file",
+            "type": "value",
+            "enabled": true,
+            "pattern": "etc/shadow$"
+        },
+        {
+            "id": "Potential Linux passwd file",
+            "type": "value",
+            "enabled": true,
+            "pattern": "etc/passwd$"
+        },
+        {
+            "id": "Docker configuration file",
+            "type": "value",
+            "enabled": true,
+            "pattern": "^\\.?dockercfg$"
+        },
+        {
+            "id": "NPM configuration file",
+            "type": "value",
+            "enabled": true,
+            "pattern": "^\\.?npmrc$"
+        },
+        {
+            "id": "Environment configuration file",
+            "type": "value",
+            "enabled": true,
+            "pattern": "^\\.?env$"
+        },
+        {
+            "id": "AWS Access Key ID Value",
+            "type": "value",
+            "enabled": true,
+            "pattern": "(A3T[A-Z0-9]|AKIA|AGPA|AROA|AIPA|ANPA|ANVA|ASIA)[A-Z0-9]{16}"
+        },
+        {
+            "id": "AWS Access Key ID",
+            "type": "value",
+            "enabled": true,
+            "pattern": "((\\\"|'|` + "`" + `)?((?i)aws)?_?((?i)access)_?((?i)key)?_?((?i)id)?(\\\"|'|` + "`" + `)?\\\\s{0,50}(:|=>|=)\\\\s{0,50}(\\\"|'|` + "`" + `)?(A3T[A-Z0-9]|AKIA|AGPA|AIDA|AROA|AIPA|ANPA|ANVA|ASIA)[A-Z0-9]{16}(\\\"|'|` + "`" + `)?)"
+		},
+		{
+			"id": "AWS Account ID",
+			"type": "value",
+			"enabled": true,
+			"pattern": "((\\\"|'|` + "`" + `)?((?i)aws)?_?((?i)account)_?((?i)id)?(\\\"|'|` + "`" + `)?\\\\s{0,50}(:|=>|=)\\\\s{0,50}(\\\"|'|` + "`" + `)?[0-9]{4}-?[0-9]{4}-?[0-9]{4}(\\\"|'|` + "`" + `)?)"
+		},
+		{
+			"id": "AWS Secret Access Key",
+			"type": "value",
+			"enabled": true,
+			"pattern": "((\\\"|'|` + "`" + `)?((?i)aws)?_?((?i)secret)_?((?i)access)?_?((?i)key)?_?((?i)id)?(\\\"|'|` + "`" + `)?\\\\s{0,50}(:|=>|=)\\\\s{0,50}(\\\"|'|` + "`" + `)?[A-Za-z0-9/+=]{40}(\\\"|'|` + "`" + `)?)"
+		},
+		{		
+			"id": "AWS Session Token",
+			"type": "value",
+			"enabled": true,
+			"pattern": "((\\\"|'|` + "`" + `)?((?i)aws)?_?((?i)session)?_?((?i)token)?(\\\"|'|` + "`" + `)?\\\\s{0,50}(:|=>|=)\\\\s{0,50}(\\\"|'|` + "`" + `)?[A-Za-z0-9/+=]{16,}(\\\"|'|` + "`" + `)?)"
+		},
+		{
+			"id": "Artifactory",
+			"type": "value",
+			"enabled": true,
+			"pattern": "(?i)artifactory.{0,50}(\\\"|'|` + "`" + `)?[a-zA-Z0-9=]{112}(\\\"|'|` + "`" + `)?"
+		},
+		{		
+			"id": "CodeClimate",
+			"type": "value",
+			"enabled": true,
+			"pattern": "(?i)codeclima.{0,50}(\\\"|'|` + "`" + `)?[0-9a-f]{64}(\\\"|'|` + "`" + `)?"
+		},
+		{
+			"id": "Facebook access token",
+			"type": "value",
+			"enabled": true,
+			"pattern": "EAACEdEose0cBA[0-9A-Za-z]+"
+		},
+		{
+			"id": "Google (GCM) Service account",
+			"type": "value",
+			"enabled": true,
+			"pattern": "((\\\"|'|` + "`" + `)?type(\\\"|'|` + "`" + `)?\\\\s{0,50}(:|=>|=)\\\\s{0,50}(\\\"|'|` + "`" + `)?service_account(\\\"|'|` + "`" + `)?,?)"
+		},
+		{		
+			"id": "Stripe API key",
+			"type": "value",
+			"enabled": true,
+			"pattern": "(?:r|s)k_[live|test]_[0-9a-zA-Z]{24}"
+		},
+		{
+			"id": "Google OAuth Key",
+			"type": "value",
+			"enabled": true,
+			"pattern": "[0-9]+-[0-9A-Za-z_]{32}\\.apps\\.googleusercontent\\.com"
+		},
+		{
+			"id": "Google Cloud API Key",
+			"type": "value",
+			"enabled": true,
+			"pattern": "AIza[0-9A-Za-z\\\\-_]{35}"
+		},
+		{
+			"id": "Google OAuth Access Token",
+			"type": "value",
+			"enabled": true,
+			"pattern": "ya29\\\\.[0-9A-Za-z\\\\-_]+"
+		},
+		{
+			"id": "Picatic API key",
+			"type": "value",
+			"enabled": true,
+			"pattern": "sk_[live|test]_[0-9a-z]{32}"
+		},
+{
+"id": "Square Access Token",
+"type": "value",
+"enabled": true,
+"pattern": "sq0atp-[0-9A-Za-z\\-_]{22}"
+},
+{
+"id": "Square OAuth Secret",
+"type": "value",
+"enabled": true,
+"pattern": "sq0csp-[0-9A-Za-z\\-_]{43}"
+},
+{
+"id": "PayPal/Braintree Access Token",
+"type": "value",
+"enabled": true,
+"pattern": "access_token\\$production\\$[0-9a-z]{16}\\$[0-9a-f]{32}"
+},
+{
+"id": "Amazon MWS Auth Token",
+"type": "value",
+"enabled": true,
+"pattern": "amzn\\.mws\\.[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+},
+{
+"id": "Twilo API Key",
+"type": "value",
+"enabled": true,
+"pattern": "SK[0-9a-fA-F]{32}"
+},
+{
+"id": "SendGrid API Key",
+"type": "value",
+"enabled": true,
+"pattern": "SG\\.[0-9A-Za-z\\-_]{22}\\.[0-9A-Za-z\\-_]{43}"
+},
+{
+"id": "MailGun API Key",
+"type": "value",
+"enabled": true,
+"pattern": "key-[0-9a-zA-Z]{32}"
+},
+{
+"id": "MailChimp API Key",
+"type": "value",
+"enabled": true,
+"pattern": "[0-9a-f]{32}-us[0-9]{12}"
+},
+			{
+			"id": "SSH Password",
+			"type": "value",
+			"enabled": true,
+			"pattern": "sshpass -p.*['|\\\"]"
+			},
+			{
+					"id": "Outlook team",
+					"type": "value",
+					"enabled": true,
+					"pattern": "(https\\\\://outlook\\\\.office.com/webhook/[0-9a-f-]{36}\\\\@)"
+			},
+{
+			"id": "Sauce Token",
+			"type": "value",
+			"enabled": true,
+			"pattern": "(?i)sauce.{0,50}(\\\"|'|` + "`" + `)?[0-9a-f-]{36}(\\\"|'|` + "`" + `)?"
+},
+		{
+			"id": "Slack Token",
+			"type": "value",
+			"enabled": true,
+			"pattern": "(xox[pboa]-[0-9]{12}-[0-9]{12}-[0-9]{12}-[a-z0-9]{32})"
+		},
+		{
+			"id": "Slack Webhook",
+			"type": "value",
+			"enabled": true,
+			"pattern": "https://hooks.slack.com/services/T[a-zA-Z0-9_]{8}/B[a-zA-Z0-9_]{8}/[a-zA-Z0-9_]{24}"
+		},
+		{
+			"id": "SonarQube Docs API Key",
+			"type": "value",
+			"enabled": true,
+			"pattern": "(?i)sonar.{0,50}(\\\"|'|` + "`" + `)?[0-9a-f]{40}(\\\"|'|` + "`" + `)?"
+		},
+		{
+			"id": "HockeyApp",
+			"type": "value",
+			"enabled": true,
+			"pattern": "(?i)hockey.{0,50}(\\\"|'|` + "`" + `)?[0-9a-f]{32}(\\\"|'|` + "`" + `)?"
+		},
+		{
+			"id": "Username and password in URI",
+			"type": "value",
+			"enabled": true,
+			"pattern": "([\\w+]{1,24})(://)([^$<]{1})([^\\s\";]{1,}):([^$<]{1})([^\\s\";/]{1,})@[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,24}([^\\s]+)"
+		},
+{
+"id": "NuGet API Key",
+"type": "value",
+"enabled": true,
+"pattern": "oy2[a-z0-9]{43}"
+},
+{
+"id": "StackHawk API Key",
+"type": "value",
+"enabled": true,
+"pattern": "hawk\\.[0-9A-Za-z\\-_]{20}\\.[0-9A-Za-z\\-_]{20}"
+},
+{
+"id": "Potential PuTTYgen private key",
+"type": "value",
+"enabled": true,
+"pattern": ".ppk$"
+},
+{
+"id": "Heroku config file",
+"type": "value",
+"enabled": true,
+"pattern": "heroku.json$"
+},
+{
+"id": "SQL Data dump file",
+"type": "value",
+"enabled": true,
+"pattern": ".sqldump$"
+},
+{
+"id": "MySQL dump w/ bcrypt hashes",
+"type": "value",
+"enabled": true,
+"pattern": "dump.sql$"
+},
+{
+"id": "Public ssh key",
+"type": "value",
+"enabled": true,
+"pattern": "id_rsa_pub$"
+},
+{
+"id": "Mongoid config file",
+"type": "value",
+"enabled": true,
+"pattern": "mongoid.yml$"
+},
+{
+"id": "Salesforce credentials in a nodejs project",
+"type": "value",
+"enabled": true,
+"pattern": "salesforce.js$"
+},
+{
+"id": "netrc with SMTP credentials",
+"type": "value",
+"enabled": true,
+"pattern": ".netrc$"
+},
+			{
+			"id": "Created by remote-sync for Atom, contains FTP and/or SCP/SFTP/SSH server details and credentials",
+			"type": "value",
+			"enabled": true,
+			"pattern": ".remote-sync.json$"
+			},
+			{
+			"id": "esmtp configuration",
+			"type": "value",
+			"enabled": true,
+			"pattern": ".esmtprc$"
+			},
+			{
+			"id": "Created by sftp-deployment for Atom, contains server details and credentials",
+			"type": "value",
+			"enabled": true,
+			"pattern": "^deployment-config.json?$"
+			},
+			{
+			"id": "Created by sftp-deployment for Atom, contains server details and credentials",
+			"type": "value",
+			"enabled": true,
+			"pattern": ".ftpconfig$"
+			},
+			{
+			"id": "Contains a private key",
+			"type": "value",
+			"enabled": true,
+			"pattern": "-----BEGIN (EC|RSA|DSA|OPENSSH|PGP) PRIVATE KEY"
+			},
+			{
+			"id": "WP-Config",
+			"type": "value",
+			"enabled": true,
+			"pattern": "define(.{0,20})?(DB_CHARSET|NONCE_SALT|LOGGED_IN_SALT|AUTH_SALT|NONCE_KEY|DB_HOST|DB_PASSWORD|AUTH_KEY|SECURE_AUTH_KEY|LOGGED_IN_KEY|DB_NAME|DB_USER)(.{0,20})?['|\"].{10,120}['|\"]"
+			},
+			{
+			"id": "AWS cred file info",
+			"type": "value",
+			"enabled": true,
+			"pattern": "(?i)(aws_access_key_id|aws_secret_access_key)(.{0,20})?=.[0-9a-zA-Z\\/+]{20,40}"
+			},
+			{
+			"id": "Facebook Secret Key",
+			"type": "value",
+			"enabled": true,
+			"pattern": "(?i)(facebook|fb)(.{0,20})?(?-i)['\\\"][0-9a-f]{32}['\\\"]"
+			},
+			{
+			"id": "Facebook Client ID",
+			"type": "value",
+			"enabled": true,
+			"pattern": "(?i)(facebook|fb)(.{0,20})?['\\\"][0-9]{13,17}['\\\"]"
+			},
+			{
+			"id": "Twitter Secret Key",
+			"type": "value",
+			"enabled": true,
+			"pattern": "(?i)twitter(.{0,20})?['\\\"][0-9a-z]{35,44}['\\\"]"
+			},
+			{
+			"id": "Twitter Client ID",
+			"type": "value",
+			"enabled": true,
+			"pattern": "(?i)twitter(.{0,20})?['\\\"][0-9a-z]{18,25}['\\\"]"
+			},
+			{
+			"id": "Github Key",
+			"type": "value",
+			"enabled": true,
+			"pattern": "(?i)github(.{0,20})?(?-i)['\\\"][0-9a-zA-Z]{35,40}['\\\"]"
+			},
+			{
+			"id": "Heroku API key",
+			"type": "value",
+			"enabled": true,
+			"pattern": "(?i)heroku(.{0,20})?['\"][0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}['\"]"
+			},
+			{
+			"id": "Linkedin Client ID",
+			"type": "value",
+			"enabled": true,
+			"pattern": "(?i)linkedin(.{0,20})?(?-i)['\\\"][0-9a-z]{12}['\\\"]"
+			},
+			{
+			"id": "LinkedIn Secret Key",
+			"type": "value",
+			"enabled": true,
+			"pattern": "(?i)linkedin(.{0,20})?['\\\"][0-9a-z]{16}['\\\"]"
+			},
+			{
+			"id": "Created by Jetbrains IDEs, contains webserver credentials with encoded passwords (not encrypted!)",
+			"type": "value",
+			"enabled": true,
+			"pattern": "\\.?idea[\\\\\\/]WebServers.xml$"
+			},
+			{
+			"id": "Created by vscode-sftp for VSCode, contains SFTP/SSH server details and credentials",
+			"type": "value",
+			"enabled": true,
+			"pattern": "\\.?vscode[\\\\\\/]sftp.json$"
+			},
+			{
+			"id": "Ruby on rails secrets.yml file (contains passwords)",
+			"type": "value",
+			"enabled": true,
+			"pattern": "web[\\\\\\/]ruby[\\\\\\/]secrets.yml"
+			},
+			{
+			"id": "Docker registry authentication file",
+			"type": "value",
+			"enabled": true,
+			"pattern": "\\.?docker[\\\\\\/]config.json$"
+			},
+			{
+			"id": "Rails master key (used for decrypting credentials.yml.enc for Rails 5.2+)",
+			"type": "value",
+			"enabled": true,
+			"pattern": "ruby[\\\\\\/]config[\\\\\\/]master.key$"
+			},
+			{
+			"id": "Firefox saved password collection (can be decrypted using keys4.db)",
+			"type": "value",
+			"enabled": true,
+			"pattern": "\\.?mozilla[\\\\\\/]firefox[\\\\\\/]logins.json$"
+			},
+			{
+			"id": "email",
+			"type": "value",
+			"enabled": true,
+			"pattern": "[A-Za-z0-9._\\-]+@[A-Za-z0-9.\\-]+\\.[A-Za-z]{2,61}"
+			},
+			{
+			"id": "id_card",
+			"type": "value",
+			"enabled": true,
+			"pattern": "([1-9]\\d{5}(19|20)\\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\\d{3}[0-9Xx])"
+			},
+			{
+			"id": "phone",
+			"type": "value",
+			"enabled": true,
+			"pattern": "1[3-9]\\d{9}"
+			},
+			{
+			"id": "jwt_token",
+			"type": "value",
+			"enabled": true,
+			"pattern": "eyJ[A-Za-z0-9_/+\\-]{10,}={0,2}\\.[A-Za-z0-9_/+\\-\\\\]{15,}={0,2}\\.[A-Za-z0-9_/+\\-\\\\]{10,}={0,2}"
+			},
+			{
+			"id": "Aliyun_AK_ID",
+			"type": "value",
+			"enabled": true,
+			"pattern": "LTAI[A-Za-z\\d]{12,30}"
+			},
+			{
+			"id": "QCloud_AK_ID",
+			"type": "value",
+			"enabled": true,
+			"pattern": "AKID[A-Za-z\\d]{13,40}"
+			},
+			{
+			"id": "JDCloud_AK_ID",
+			"type": "value",
+			"enabled": true,
+			"pattern": "JDC_[0-9A-Z]{25,40}"
+			},
+			{
+			"id": "AWS_AK_ID",
+			"type": "value",
+			"enabled": true,
+			"pattern": "[\"'](?:A3T[A-Z0-9]|AKIA|AGPA|AIDA|AROA|AIPA|ANPA|ANVA|ASIA)[A-Z0-9]{16}[\"']"
+			},
+			{
+			"id": "VolcanoEngine_AK_ID",
+			"type": "value",
+			"enabled": true,
+			"pattern": "(?:AKLT|AKTP)[a-zA-Z0-9]{35,50}"
+			},
+			{
+			"id": "Kingsoft_AK_ID",
+			"type": "value",
+			"enabled": true,
+			"pattern": "AKLT[a-zA-Z0-9-_]{16,28}"
+			},
+			{
+			"id": "GCP_AK_ID",
+			"type": "value",
+			"enabled": true,
+			"pattern": "AIza[0-9A-Za-z_\\-]{35}"
+			},
+				{
+				"id": "bearer_token",
+				"type": "value",
+				"enabled": true,
+				"pattern": "[Bb]earer\\s+[a-zA-Z0-9\\-=._+/\\\\]{20,500}"
+				},
+				{
+				"id": "basic_token",
+				"type": "value",
+				"enabled": true,
+				"pattern": "[Bb]asic\\s+[A-Za-z0-9+/]{18,}={0,2}"
+				},
+				{
+				"id": "auth_token",
+				"type": "value",
+				"enabled": true,
+				"pattern": "[\"'\\[]*[Aa]uthorization[\"'\\]]*\\s*[:=]\\s*['\"]?(?:[Tt]oken\\s+)?[a-zA-Z0-9\\-_+/]{20,500}['\"]?"
+				},
+				{
+				"id": "private_key",
+				"type": "value",
+				"enabled": true,
+				"pattern": "-----\\s*?BEGIN[ A-Z0-9_-]*?PRIVATE KEY\\s*?-----[a-zA-Z0-9\\/\\n\\r=+]*-----\\s*?END[ A-Z0-9_-]*? PRIVATE KEY\\s*?-----"
+				},
+				{
+				"id": "gitlab_v2_token",
+				"type": "value",
+				"enabled": true,
+				"pattern": "(glpat-[a-zA-Z0-9\\-=_]{20,22})"
+				},
+				{
+				"id": "github_token",
+				"type": "value",
+				"enabled": true,
+				"pattern": "((?:ghp|gho|ghu|ghs|ghr|github_pat)_[a-zA-Z0-9_]{36,255})"
+				},
+				{
+				"id": "qcloud_api_gateway_appkey",
+				"type": "value",
+				"enabled": true,
+				"pattern": "APID[a-zA-Z0-9]{32,42}"
+				},
+			{
+			"id": "wechat_appid",
+			"type": "value",
+			"enabled": true,
+			"pattern": "[\"'](wx[a-z0-9]{15,18})[\"']"
+			},
+			{
+			"id": "wechat_corpid",
+			"type": "value",
+			"enabled": true,
+			"pattern": "[\"'](ww[a-z0-9]{15,18})[\"']"
+			},
+			{
+			"id": "wechat_id",
+			"type": "value",
+			"enabled": true,
+			"pattern": "[\"'](gh_[a-z0-9]{11,13})[\"']"
+			},
+			{
+				"id": "password",
+				"type": "value",
+				"enabled": true,
+				"pattern": "(?i)(?:admin_?pass|password|[a-z]{3,15}_?password|user_?pass|user_?pwd|admin_?pwd)\\\\?['\"]*\\s*[:=]\\s*\\\\?['\"][a-z0-9!@#$%&*]{5,20}\\\\?['\"]"
+			},
+			{
+				"id": "wechat_webhookurl",
+				"type": "value",
+				"enabled": true,
+				"pattern": "https://qyapi.weixin.qq.com/cgi-bin/webhook/send\\?key=[a-zA-Z0-9\\-]{25,50}"
+			},
+			{
+				"id": "dingtalk_webhookurl",
+				"type": "value",
+				"enabled": true,
+				"pattern": "https://oapi.dingtalk.com/robot/send\\?access_token=[a-z0-9]{50,80}"
+			},
+			{
+				"id": "feishu_webhookurl",
+				"type": "value",
+				"enabled": true,
+				"pattern": "https://open.feishu.cn/open-apis/bot/v2/hook/[a-z0-9\\-]{25,50}"
+			},
+			{
+				"id": "slack_webhookurl",
+				"type": "value",
+				"enabled": true,
+				"pattern": "https://hooks.slack.com/services/[a-zA-Z0-9\\-_]{6,12}/[a-zA-Z0-9\\-_]{6,12}/[a-zA-Z0-9\\-_]{15,24}"
+			},
+		{
+			"id": "grafana_api_key",
+			"type": "value",
+			"enabled": true,
+			"pattern": "eyJrIjoi[a-zA-Z0-9\\-_+/]{50,100}={0,2}"
+		},
+		{
+			"id": "grafana_cloud_api_token",
+			"type": "value",
+			"enabled": true,
+			"pattern": "glc_[A-Za-z0-9\\-_+/]{32,200}={0,2}"
+		},
+		{
+			"id": "grafana_service_account_token",
+			"type": "value",
+			"enabled": true,
+			"pattern": "glsa_[A-Za-z0-9]{32}_[A-Fa-f0-9]{8}"
+		},
+		{
+			"id": "google_captcha",
+			"type": "value",
+			"enabled": true,
+			"pattern": "6L[0-9A-Za-z-_]{38}|^6[0-9a-zA-Z_-]{39}$"
+		},
+		{
+			"id": "google_oauth",
+			"type": "value",
+			"enabled": true,
+			"pattern": "ya29\\.[0-9A-Za-z\\-_]+"
+		},
+		{
+			"id": "amazon_aws_access_key_id",
+			"type": "value",
+			"enabled": true,
+			"pattern": "A[SK]IA[0-9A-Z]{16}"
+		},
+		{
+			"id": "amazon_mws_auth_toke",
+			"type": "value",
+			"enabled": true,
+			"pattern": "amzn\\\\.mws\\\\.[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+		},
+		{
+			"id": "amazon_aws_url",
+			"type": "value",
+			"enabled": true,
+			"pattern": "s3\\.amazonaws.com[/]+|[a-zA-Z0-9_-]*\\.s3\\.amazonaws.com"
+		},
+		{
+			"id": "facebook_access_token",
+			"type": "value",
+			"enabled": true,
+			"pattern": "EAACEdEose0cBA[0-9A-Za-z]+"
+		},
+		{
+			"id": "authorization_basic",
+			"type": "value",
+			"enabled": true,
+			"pattern": "basic\\s*[a-zA-Z0-9=:_\\+\\/-]+"
+		},
+		{
+			"id": "authorization_bearer",
+			"type": "value",
+			"enabled": true,
+			"pattern": "bearer\\s*[a-zA-Z0-9_\\-\\.=:_\\+\\/]+"
+		},
+		{
+			"id": "authorization_api",
+			"type": "value",
+			"enabled": true,
+			"pattern": "api[key|\\s*]+[a-zA-Z0-9_\\-]+"
+		},
+		{
+			"id": "mailgun_api_key",
+			"type": "value",
+			"enabled": true,
+			"pattern": "key-[0-9a-zA-Z]{32}"
+		},
+		{
+			"id": "twilio_api_key",
+			"type": "value",
+			"enabled": true,
+			"pattern": "SK[0-9a-fA-F]{32}"
+		},
+		{
+			"id": "twilio_account_sid",
+			"type": "value",
+			"enabled": true,
+			"pattern": "AC[a-zA-Z0-9_\\-]{32}"
+		},
+		{
+			"id": "twilio_app_sid",
+			"type": "value",
+			"enabled": true,
+			"pattern": "AP[a-zA-Z0-9_\\-]{32}"
+		},
+		{
+			"id": "paypal_braintree_access_token",
+			"type": "value",
+			"enabled": true,
+			"pattern": "access_token\\$production\\$[0-9a-z]{16}\\$[0-9a-f]{32}"
+		},
+		{
+			"id": "square_oauth_secret",
+			"type": "value",
+			"enabled": true,
+			"pattern": "sq0csp-[ 0-9A-Za-z\\-_]{43}|sq0[a-z]{3}-[0-9A-Za-z\\-_]{22,43}"
+		},
+		{
+			"id": "square_access_token",
+			"type": "value",
+			"enabled": true,
+			"pattern": "sqOatp-[0-9A-Za-z\\-_]{22}|EAAA[a-zA-Z0-9]{60}"
+		},
+		{
+			"id": "stripe_standard_api",
+			"type": "value",
+			"enabled": true,
+			"pattern": "sk_live_[0-9a-zA-Z]{24}"
+		},
+		{
+			"id": "stripe_restricted_api",
+			"type": "value",
+			"enabled": true,
+			"pattern": "rk_live_[0-9a-zA-Z]{24}"
+		},
+		{
+			"id": "github_access_token",
+			"type": "value",
+			"enabled": true,
+			"pattern": "[a-zA-Z0-9_-]*:[a-zA-Z0-9_\\-]+@github\\.com*"
+		},
+		{
+			"id": "ssh_dsa_private_key",
+			"type": "value",
+			"enabled": true,
+			"pattern": "-----BEGIN DSA PRIVATE KEY-----"
+		},
+		{
+			"id": "rsa_private_key",
+			"type": "value",
+			"enabled": true,
+			"pattern": "-----BEGIN RSA PRIVATE KEY-----"
+		},
+		{
+			"id": "ssh_dc_private_key",
+			"type": "value",
+			"enabled": true,
+			"pattern": "-----BEGIN EC PRIVATE KEY-----"
+		},
+		{
+			"id": "pgp_private_block",
+			"type": "value",
+			"enabled": true,
+			"pattern": "-----BEGIN PGP PRIVATE KEY BLOCK-----"
+		},
+		{
+			"id": "json_web_token",
+			"type": "value",
+			"enabled": true,
+			"pattern": "ey[A-Za-z0-9-_=]+\\.[A-Za-z0-9-_=]+\\.?[A-Za-z0-9-_.+/=]*$"
+		},
+		{
+			"id": "key",
+			"type": "key",
+			"enabled": true,
+			"pattern": "key$"
+		},
+		{
+			"id": "apikey",
+			"type": "key",
+			"enabled": true,
+			"pattern": "apikey$"
+		},
+		{
+			"id": "api",
+			"type": "key",
+			"enabled": true,
+			"pattern": "api$"
+		},
+		{
+			"id": "token",
+			"type": "key",
+			"enabled": true,
+			"pattern": "token$"
+		},
+		{
+			"id": "secret",
+			"type": "key",
+			"enabled": true,
+			"pattern": "secret$"
+		},
+		{
+			"id": "apiurl",
+			"type": "key",
+			"enabled": true,
+			"pattern": "apiurl$"
+		},
+		{
+			"id": "client",
+			"type": "key",
+			"enabled": true,
+			"pattern": "client$"
+		},
+		{
+			"id": "passwd",
+			"type": "key",
+			"enabled": true,
+			"pattern": "passwd$"
+		},
+		{
+			"id": "password",
+			"type": "key",
+			"enabled": true,
+			"pattern": "password$"
+		},
+		{
+			"id": "auth",
+			"type": "key",
+			"enabled": true,
+			"pattern": "auth$"
+		},
+		{
+			"id": "access",
+			"type": "key",
+			"enabled": true,
+			"pattern": "access$"
+		}
+		{
+			"id": "INFO-KEY",
+			"type": "key",
+			"enabled": true,
+			"pattern": "(access_key|access_token|admin_pass|admin_user|algolia_admin_key|algolia_api_key|alias_pass|alicloud_access_key|amazon_secret_access_key|amazonaws|ansible_vault_password|aos_key|api_key|api_key_secret|api_key_sid|api_secret|api.googlemaps AIza|apidocs|apikey|apiSecret|app_debug|app_id|app_key|app_log_level|app_secret|appkey|appkeysecret|application_key|appsecret|appspot|auth_token|authorizationToken|authsecret|aws_access|aws_access_key_id|aws_bucket|aws_key|aws_secret|aws_secret_key|aws_token|AWSSecretKey|b2_app_key|bashrc password|bintray_apikey|bintray_gpg_password|bintray_key|bintraykey|bluemix_api_key|bluemix_pass|browserstack_access_key|bucket_password|bucketeer_aws_access_key_id|bucketeer_aws_secret_access_key|built_branch_deploy_key|bx_password|cache_driver|cache_s3_secret_key|cattle_access_key|cattle_secret_key|certificate_password|ci_deploy_password|client_secret|client_zpk_secret_key|clojars_password|cloud_api_key|cloud_watch_aws_access_key|cloudant_password|cloudflare_api_key|cloudflare_auth_key|cloudinary_api_secret|cloudinary_name|codecov_token|config|conn.login|connectionstring|consumer_key|consumer_secret|credentials|cypress_record_key|database_password|database_schema_test|datadog_api_key|datadog_app_key|db_password|db_server|db_username|dbpasswd|dbpassword|dbuser|deploy_password|digitalocean_ssh_key_body|digitalocean_ssh_key_ids|docker_hub_password|docker_key|docker_pass|docker_passwd|docker_password|dockerhub_password|dockerhubpassword|dot-files|dotfiles|droplet_travis_password|dynamoaccesskeyid|dynamosecretaccesskey|elastica_host|elastica_port|elasticsearch_password|encryption_key|encryption_password|env.heroku_api_key|env.sonatype_password|eureka.awssecretkey)"
+		}
+]
+}`

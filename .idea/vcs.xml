@@ -3,8 +3,11 @@
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/libs/fingerprintx" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/libs/gospider" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/libs/httpx" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/libs/jsluice" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/libs/ksubdomain" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/libs/naabu" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/libs/subfinder" vcs="Git" />
   </component>
 </project>

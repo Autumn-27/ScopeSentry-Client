@@ -8,30 +8,49 @@ package subdomainMode
 
 import (
 	"context"
-	"fmt"
-	"github.com/Autumn-27/ScopeSentry-Client/pkg/config"
+	"github.com/Autumn-27/ScopeSentry-Client/pkg/types"
+	"github.com/Autumn-27/ScopeSentry-Client/pkg/util"
 	"github.com/boy-hack/ksubdomain/core/gologger"
 	"github.com/boy-hack/ksubdomain/core/options"
 	"github.com/boy-hack/ksubdomain/runner"
 	"github.com/boy-hack/ksubdomain/runner/outputter"
 	"github.com/boy-hack/ksubdomain/runner/outputter/output"
 	"github.com/boy-hack/ksubdomain/runner/processbar"
+	"strings"
 )
 
-func subdomainScan(Host string) {
-
-	var scopeSentryConfig config.ScopeSentryConfig
-	scopeSentryConfig = config.ParseConfig()
-	var threadNumber = scopeSentryConfig.Subdomain.ThreadNumber
-	fmt.Println(threadNumber)
-
-}
-
-func main() {
+func SubdomainScan(Host []string) []types.SubdomainResult {
+	//var scopeSentryConfig config.ScopeSentryConfig
+	//scopeSentryConfig := config.ParseConfig()
+	//var threadNumber = scopeSentryConfig.Subdomain.ThreadNumber
+	subDomainResult := []types.SubdomainResult{}
 	process := processbar.ScreenProcess{}
-	screenPrinter, _ := output.NewScreenOutput(false)
+	resultCallback := func(Domains []string) {
+		// Do something with the msg in the context of the main function
+		//fmt.Println("Received message in main:", Domains)
 
-	domains := []string{"www.hacking8.com", "x.hacking8.com"}
+		_domain := types.SubdomainResult{}
+		_domain.Host = Domains[0]
+		_domain.Type = "A"
+		for i := 1; i < len(Domains); i++ {
+			containsSpace := strings.Contains(Domains[i], " ")
+			if containsSpace {
+				result := strings.SplitN(Domains[i], " ", 2)
+				_domain.Type = result[0]
+				_domain.Value = append(_domain.Value, result[1])
+			} else {
+				//_domain.Value = append(_domain.Value, Domains[i])
+				_domain.IP = append(_domain.IP, Domains[i])
+			}
+		}
+		time := util.GetTimeNow()
+		_domain.Time = time
+		subDomainResult = append(subDomainResult, _domain)
+	}
+
+	screenPrinter, _ := output.NewScreenOutput(false, resultCallback)
+
+	domains := Host
 	domainChanel := make(chan string)
 	go func() {
 		for _, d := range domains {
@@ -42,7 +61,7 @@ func main() {
 	opt := &options.Options{
 		Rate:        options.Band2Rate("1m"),
 		Domain:      domainChanel,
-		DomainTotal: 2,
+		DomainTotal: len(domains),
 		Resolvers:   options.GetResolvers(""),
 		Silent:      false,
 		TimeOut:     10,
@@ -63,4 +82,6 @@ func main() {
 	ctx := context.Background()
 	r.RunEnumeration(ctx)
 	r.Close()
+	return subDomainResult
+
 }

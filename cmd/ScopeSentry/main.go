@@ -9,18 +9,32 @@ package main
 import (
 	"fmt"
 	"github.com/Autumn-27/ScopeSentry-Client/pkg/config"
+	"github.com/Autumn-27/ScopeSentry-Client/pkg/logMode"
 	"github.com/Autumn-27/ScopeSentry-Client/pkg/runner"
+	"os"
 )
 
 func main() {
-	config.SetUp()
-	fmt.Println(config.ConfigDir)
+	flag := config.SetUp()
+	if !flag {
+		fmt.Println("[Err] Error loading configuration file, program exits")
+		myLog := logMode.CustomLog{
+			Status: "Error",
+			Msg:    fmt.Sprintf("[Err] Error loading configuration file, program exits"),
+		}
+		logMode.PrintLog(myLog)
+		os.Exit(1)
+	}
 	runnerOption := runner.Option{
 		SubfinderEnabled:     true,
 		SubdomainScanEnabled: true,
 		PortScanEnabled:      true,
 		DirScanEnabled:       true,
 		CrawlerEnabled:       true,
+		Ports:                "80,443,666,22,8000",
+		UrlScan:              true,
+		Cookie:               "",
+		Header:               []string{},
 	}
 	Host := "rainy-autumn.top"
 	runner.Process(Host, runnerOption)

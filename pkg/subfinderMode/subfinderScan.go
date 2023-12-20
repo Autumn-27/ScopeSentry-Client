@@ -7,16 +7,22 @@
 package subfinderMode
 
 import (
+	"bufio"
 	"bytes"
 	"context"
+	"fmt"
 	"github.com/Autumn-27/ScopeSentry-Client/pkg/config"
+	"github.com/Autumn-27/ScopeSentry-Client/pkg/logMode"
+	"github.com/Autumn-27/ScopeSentry-Client/pkg/subdomainMode"
+	"github.com/Autumn-27/ScopeSentry-Client/pkg/types"
 	"github.com/projectdiscovery/subfinder/v2/pkg/runner"
 	"io"
 	"log"
 	"path/filepath"
+	"strings"
 )
 
-func SubfinderScan(Host string) string {
+func SubfinderScan(Host string) []types.SubdomainResult {
 
 	subfinderOpts := &runner.Options{
 		Threads:            10, // Thread controls the number of threads to use for active enumerations
@@ -34,13 +40,25 @@ func SubfinderScan(Host string) string {
 
 	subfinder, err := runner.NewRunner(subfinderOpts)
 	if err != nil {
+		myLog := logMode.CustomLog{
+			Status: "Error",
+			Msg:    fmt.Sprintf("[Err] failed to create subfinder runner: ", err),
+		}
+		logMode.PrintLog(myLog)
 		log.Fatalf("failed to create subfinder runner: %v", err)
 	}
 
 	output := &bytes.Buffer{}
 	// To run subdomain enumeration on a single domain
 	if err = subfinder.EnumerateSingleDomainWithCtx(context.Background(), Host, []io.Writer{output}); err != nil {
+
+		myLog := logMode.CustomLog{
+			Status: "Error",
+			Msg:    fmt.Sprintf("[Err] failed to enumerate single domain:", err),
+		}
+		logMode.PrintLog(myLog)
 		log.Fatalf("failed to enumerate single domain: %v", err)
+
 	}
 
 	// To run subdomain enumeration on a list of domains from file/reader
@@ -55,5 +73,28 @@ func SubfinderScan(Host string) string {
 
 	// print the output
 	log.Println(output.String())
-	return output.String()
+	outputString := output.String()
+	lines := []string{}
+	if outputString != "" {
+
+		scanner := bufio.NewScanner(strings.NewReader(outputString))
+
+		for scanner.Scan() {
+			line := scanner.Text()
+			lines = append(lines, line)
+		}
+
+		if err := scanner.Err(); err != nil {
+
+			myLog := logMode.CustomLog{
+				Status: "Error",
+				Msg:    fmt.Sprintf("[Err] scanner subfinder result:", err),
+			}
+			logMode.PrintLog(myLog)
+		}
+
+	}
+	subfinderResult := subdomainMode.SubdomainScan(lines)
+
+	return subfinderResult
 }

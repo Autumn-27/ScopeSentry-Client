@@ -1,4 +1,4 @@
-src_ip: 192.168.0.101
+src_ip: 192.168.70.20
 device: \Device\NPF_{B5B30A0D-66E9-463B-9C8A-4344D50315B7}
 src_mac: a0:e7:0b:a0:c4:3b
-dst_mac: f4:6d:2f:98:dd:73
+dst_mac: 80:05:88:77:6c:b0

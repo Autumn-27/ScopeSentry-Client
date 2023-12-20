@@ -10,8 +10,12 @@ import (
 	"fmt"
 	"github.com/Autumn-27/ScopeSentry-Client/pkg/httpxMode"
 	"github.com/Autumn-27/ScopeSentry-Client/pkg/logMode"
+	"github.com/Autumn-27/ScopeSentry-Client/pkg/portScanMode"
+	"github.com/Autumn-27/ScopeSentry-Client/pkg/subdomainMode"
 	"github.com/Autumn-27/ScopeSentry-Client/pkg/subfinderMode"
-	httpxRunner "github.com/projectdiscovery/httpx/runner"
+	"github.com/Autumn-27/ScopeSentry-Client/pkg/types"
+	"github.com/Autumn-27/ScopeSentry-Client/pkg/urlScanMode"
+	"github.com/Autumn-27/ScopeSentry-Client/pkg/util"
 	"net/url"
 	"strings"
 	"sync"
@@ -23,82 +27,122 @@ type Option struct {
 	PortScanEnabled      bool
 	DirScanEnabled       bool
 	CrawlerEnabled       bool
+	Ports                string
+	WaybackurlEnabled    bool
+	UrlScan              bool
+	Cookie               string
+	Header               []string
 }
 
 func Process(Host string, op Option) {
 	normalizedHttp := ""
 	if !strings.HasPrefix(Host, "http://") && !strings.HasPrefix(Host, "https://") {
-		// 如果不以 "http://" 或 "https://" 开头，则在其前面添加 "http://"
 		normalizedHttp = "http://" + Host
 	} else {
 		normalizedHttp = Host
 	}
 	parsedURL, err := url.Parse(normalizedHttp)
 	if err != nil {
-		httpxLog := logMode.CustomLog{
+		myLog := logMode.CustomLog{
 			Status: "Error",
 			Msg:    fmt.Sprintf("[Err] %s: %s\n", Host, "parse url error"),
 		}
-		logMode.PrintLog(httpxLog)
+		logMode.PrintLog(myLog)
 		return
 	}
 	hostParts := strings.Split(parsedURL.Host, ":")
 	hostWithoutPort := hostParts[0]
 	port := parsedURL.Port()
-	fmt.Println(hostWithoutPort)
-	fmt.Println(port)
-	subfinderDomsString := ""
+	SubDomainResults := []types.SubdomainResult{}
+	domainDnsResult := subdomainMode.SubdomainScan([]string{hostWithoutPort})
+	SubDomainResults = append(SubDomainResults, domainDnsResult...)
+	if op.SubfinderEnabled {
+		subfinderResult := subfinderMode.SubfinderScan(hostWithoutPort)
+		SubDomainResults = append(SubDomainResults, subfinderResult...)
+	}
+
+	if op.SubdomainScanEnabled {
+		// 判断是否泛解析，跳过泛解析
+		if !util.IsWildCard(hostWithoutPort) {
+			subDomainResult := subdomainMode.SubDomainRunner(hostWithoutPort)
+			SubDomainResults = append(SubDomainResults, subDomainResult...)
+		}
+	}
+	domainList := []string{}
 	if port != "" {
-		subfinderDomsString = Host + "\n"
-		subfinderDomsString += hostWithoutPort + "\n"
-	} else {
-		subfinderDomsString = Host + "\n"
+		domainList = append(domainList, Host)
+	}
+	uniqueSubDomainResults := []types.SubdomainResult{}
+	seenHosts := make(map[string]struct{})
+	for _, result := range SubDomainResults {
+		if _, seen := seenHosts[result.Host]; seen {
+			continue
+		}
+		seenHosts[result.Host] = struct{}{}
+		domainList = append(domainList, result.Host)
+		uniqueSubDomainResults = append(uniqueSubDomainResults, result)
 	}
 
-	if op.SubfinderEnabled != false {
-		subfinderDomsString += subfinderMode.SubfinderScan(hostWithoutPort)
-	}
+	// 子域名接管 todo
 
-	if op.SubdomainScanEnabled != false {
-
-	}
-
-	var httpxResults []httpxRunner.Result
+	var httpxResults []types.AssertHttp
 	var httpxResultsMutex sync.Mutex
-	httpxResultsHandler := func(r httpxRunner.Result) {
-		fmt.Printf("Result in process: %s %s %d\n", r.Input, r.Host, r.StatusCode)
-
+	httpxResultsHandler := func(r types.AssertHttp) {
 		httpxResultsMutex.Lock()
 		httpxResults = append(httpxResults, r)
 		httpxResultsMutex.Unlock()
 	}
+	httpxMode.HttpxScan(domainList, httpxResultsHandler)
 
-	httpxMode.HttpxScan("rainy-autumn.top", httpxResultsHandler)
-	fmt.Println("所有结果:", httpxResults)
-	// 待解析的URL字符串
-	//rawURL := "https://example.com"
-	//
-	//// 解析URL
-	//parsedURL, err := url.Parse(rawURL)
-	//if err != nil {
-	//	fmt.Println("Error parsing URL:", err)
-	//	return
-	//}
-	//// 打印URL的各个部分
-	//fmt.Println(parsedURL.Port())
-	//fmt.Println("Scheme:", parsedURL.Scheme)
-	//fmt.Println("Host:", parsedURL.Host)
-	//fmt.Println("Path:", parsedURL.Path)
-	//fmt.Println("RawQuery:", parsedURL.RawQuery)
-	//
-	//// 解析查询参数
-	//queryParams, err := url.ParseQuery(parsedURL.RawQuery)
-	//if err != nil {
-	//	fmt.Println("Error parsing query parameters:", err)
-	//	return
-	//}
-	//
-	//// 打印查询参数
-	//fmt.Println("Name:", queryParams.Get("name"))
-	//fmt.Println("Age:", queryParams.Get("age"))
+	assertOthers := []types.AssertOther{}
+	if op.PortScanEnabled {
+		for _, uniqueSubDomainResult := range uniqueSubDomainResults {
+			assertHttpTemp, assertOtherTemp := portScanMode.PortScan(uniqueSubDomainResult.Host, op.Ports)
+			httpxResults = append(httpxResults, assertHttpTemp...)
+			assertOthers = append(assertOthers, assertOtherTemp...)
+		}
+	}
+
+	//目录扫描 todo
+	//缓存污染 todo
+
+	var urlResults = []types.UrlResult{}
+	var secretsResult = []types.SecretResults{}
+	//url扫描、js信息泄露
+	if op.UrlScan {
+		domainUrlScanList := []string{}
+		for _, httpxResult := range httpxResults {
+			domainUrlScanList = append(domainUrlScanList, httpxResult.URL)
+		}
+		urlScanOption := urlScanMode.Option{
+			Cookie:  op.Cookie,
+			Headers: op.Header,
+		}
+		urlResults, secretsResult = urlScanMode.Run(urlScanOption, domainUrlScanList)
+	}
+	fmt.Println(urlResults)
+	fmt.Println(secretsResult)
+
+	uniqueurResults := []types.UrlResult{}
+	seenUrls := make(map[string]struct{})
+	urlList := []string{}
+	for _, result := range urlResults {
+		urlTemp := ""
+		isHTTP := strings.HasPrefix(result.Output, "http")
+		if isHTTP {
+			urlTemp = result.Output
+		} else {
+			urlTemp = result.Input + result.Source
+		}
+		if _, seen := seenUrls[urlTemp]; seen {
+			continue
+		}
+		seenUrls[urlTemp] = struct{}{}
+		urlList = append(urlList, urlTemp)
+		uniqueurResults = append(uniqueurResults, result)
+	}
+	if op.CrawlerEnabled {
+
+	}
+
 }
